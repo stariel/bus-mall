@@ -1,3 +1,4 @@
+'use strict';
 // Code Planning
 // 1. Create HTML slots for photos to appear
 // 4. Ensure that variables are reset at beginning of function, and that function repeats until picture 2 is not the same as 1, and 3 is not the same as 1 or 2
@@ -44,24 +45,36 @@ var wineGlass = new TestItem ('wine glass', 'img/wine-glass.jpg', 'wineGlass');
 var p1 = 0;
 var p2 = 0;
 var p3 = 0;
-var p4 = 0;
-var p5 = 0;
-var p6 = 0;
+var lastThree = [];
 
 var randomPhoto = function() {
-  p1 = math.floor(math.random() * (itemArray.length));
-  p2 = math.floor(math.random() * (itemArray.length));
-  if (p2 === p1) {
-    p2 = math.floor(math.random() * (itemArray.length));
-  }
-  else {
-    p3 = math.floor(math.random() * (itemArray.length));
-    if (p3 === p2 || p3 === p1) {
-      p3 = math.floor(math.random() * (itemArray.length));
-    };
+  while (lastThree.includes(p1)) {
+    p1 = Math.floor(Math.random() * itemArray.length);
   };
+  while (p2 === p1 || lastThree.includes(p2)) {
+    p2 = Math.floor(Math.random() * itemArray.length);
+  };
+  while (p3 === p2 || p3 === p1 || lastThree.includes(p3)) {
+    p3 = Math.floor(Math.random() * itemArray.length);
+  };
+  lastThree = [];
+  lastThree.push(p1, p2, p3);
 };
 
-var photo1 = document.getElementById('photo1');
-var img1 = document.createElement('img');
-img1.src = itemArray[p1].filePath;
+var renderPhotos = function() {
+  var photo1 = document.getElementById('photo1');
+  var img1 = document.createElement('img');
+  img1.src = itemArray[p1].filePath;
+  photo1.appendChild(img1);
+  var photo2 = document.getElementById('photo2');
+  var img2 = document.createElement('img');
+  img2.src = itemArray[p2].filePath;
+  photo2.appendChild(img2);
+  var photo3 = document.getElementById('photo3');
+  var img3 = document.createElement('img');
+  img3.src = itemArray[p3].filePath;
+  photo3.appendChild(img3);
+};
+
+randomPhoto();
+renderPhotos();
