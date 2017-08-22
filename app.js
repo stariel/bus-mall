@@ -7,7 +7,7 @@
 // 7. "Score" how many times a picture is displayed (variable in constructor function?) and how many times it is clicked.
 
 // 2. Create constructor function and push all objects to an array
-
+var maxClicks = 25;
 var itemArray = [];
 
 function TestItem (name, filePath, itemID) {
@@ -45,20 +45,21 @@ var wineGlass = new TestItem ('wine glass', 'img/wine-glass.jpg', 'wineGlass');
 var p1 = 0;
 var p2 = 0;
 var p3 = 0;
-var lastThree = [];
+var previousPics = [];
 
 var randomPhoto = function() {
-  while (lastThree.includes(p1)) {
+  
+  while (previousPics.includes(p1)) {
     p1 = Math.floor(Math.random() * itemArray.length);
   };
-  while (p2 === p1 || lastThree.includes(p2)) {
+  while (p2 === p1 || previousPics.includes(p2)) {
     p2 = Math.floor(Math.random() * itemArray.length);
   };
-  while (p3 === p2 || p3 === p1 || lastThree.includes(p3)) {
+  while (p3 === p2 || p3 === p1 || previousPics.includes(p3)) {
     p3 = Math.floor(Math.random() * itemArray.length);
   };
-  lastThree = [];
-  lastThree.push(p1, p2, p3);
+  previousPics = [];
+  previousPics.push(p1, p2, p3);
 };
 
 var renderPhotos = function() {
