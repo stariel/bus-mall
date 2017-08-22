@@ -48,16 +48,18 @@ var p3 = 0;
 var previousPics = [];
 
 var randomPhoto = function() {
-  
-  while (previousPics.includes(p1)) {
+  p1 = Math.floor(Math.random() * itemArray.length);
+  while (previousPics.includes(p1) == true) {
     p1 = Math.floor(Math.random() * itemArray.length);
-  };
+  }
+  p2 = Math.floor(Math.random() * itemArray.length);
   while (p2 === p1 || previousPics.includes(p2)) {
     p2 = Math.floor(Math.random() * itemArray.length);
-  };
+  }
+  p3 = Math.floor(Math.random() * itemArray.length);
   while (p3 === p2 || p3 === p1 || previousPics.includes(p3)) {
     p3 = Math.floor(Math.random() * itemArray.length);
-  };
+  }
   previousPics = [];
   previousPics.push(p1, p2, p3);
 };
