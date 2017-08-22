@@ -1,11 +1,11 @@
 // Code Planning
 // 1. Create HTML slots for photos to appear
-// 2. Create constructor function and push all objects to an array
-// 3. Create function to randomize images - global variables for pictures 1, 2, and 3
 // 4. Ensure that variables are reset at beginning of function, and that function repeats until picture 2 is not the same as 1, and 3 is not the same as 1 or 2
 // 5. Make sure on further iterations that pictures do not match any of the pictures from the previous set - alternating set of variables?
 // 6. Set up event listener to "listen" for clicks on each image
 // 7. "Score" how many times a picture is displayed (variable in constructor function?) and how many times it is clicked.
+
+// 2. Create constructor function and push all objects to an array
 
 var itemArray = [];
 
@@ -38,3 +38,30 @@ var unicorn = new TestItem ('unicorn meat', 'img/unicorn.jpg', 'unicorn');
 var usb = new TestItem ('tentacle usb drive', 'img/usb.gif', 'usb');
 var waterCan = new TestItem ('self-watering can', 'img/water-can.jpg', 'waterCan');
 var wineGlass = new TestItem ('wine glass', 'img/wine-glass.jpg', 'wineGlass');
+
+// 3. Create function to randomize images - global variables for pictures 1, 2, and 3
+
+var p1 = 0;
+var p2 = 0;
+var p3 = 0;
+var p4 = 0;
+var p5 = 0;
+var p6 = 0;
+
+var randomPhoto = function() {
+  p1 = math.floor(math.rand() * (itemArray.length + 1));
+  p2 = math.floor(math.rand() * (itemArray.length + 1));
+  if (p2 === p1) {
+    p2 = math.floor(math.rand() * (itemArray.length + 1));
+  }
+  else {
+    p3 = math.floor(math.rand() * (itemArray.length + 1));
+    if (p3 === p2 || p3 === p1) {
+      p3 = math.floor(math.rand() * (itemArray.length + 1));
+    };
+  };
+};
+
+var photo1 = document.getItemById('photo1');
+var img1 = document.createElement('img');
+img1.src = itemArray[p1].filePath;
