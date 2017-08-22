@@ -49,19 +49,19 @@ var p5 = 0;
 var p6 = 0;
 
 var randomPhoto = function() {
-  p1 = math.floor(math.rand() * (itemArray.length + 1));
-  p2 = math.floor(math.rand() * (itemArray.length + 1));
+  p1 = math.floor(math.random() * (itemArray.length));
+  p2 = math.floor(math.random() * (itemArray.length));
   if (p2 === p1) {
-    p2 = math.floor(math.rand() * (itemArray.length + 1));
+    p2 = math.floor(math.random() * (itemArray.length));
   }
   else {
-    p3 = math.floor(math.rand() * (itemArray.length + 1));
+    p3 = math.floor(math.random() * (itemArray.length));
     if (p3 === p2 || p3 === p1) {
-      p3 = math.floor(math.rand() * (itemArray.length + 1));
+      p3 = math.floor(math.random() * (itemArray.length));
     };
   };
 };
 
-var photo1 = document.getItemById('photo1');
+var photo1 = document.getElementById('photo1');
 var img1 = document.createElement('img');
 img1.src = itemArray[p1].filePath;
