@@ -6,7 +6,7 @@
 // 7. "Score" how many times a picture is displayed (variable in constructor function?) and how many times it is clicked.
 
 // 2. Create constructor function and push all objects to an array
-var maxClicks = 25;
+var maxClicks = 5;
 var itemArray = [];
 
 function TestItem (name, filePath, itemID) {
@@ -49,36 +49,74 @@ var p3 = 0;
 var previousPics = [];
 
 var randomPhoto = function() {
+  var photo1 = document.getElementById('photo1');
+  var img1 = photo1.children[0];
   p1 = Math.floor(Math.random() * itemArray.length);
   while (previousPics.includes(p1)) {
     p1 = Math.floor(Math.random() * itemArray.length);
   }
+  img1.src = itemArray[p1].filePath;
+  img1.id = itemArray[p1].itemID;
+  var photo2 = document.getElementById('photo2');
+  var img2 = photo2.children[0];
   p2 = Math.floor(Math.random() * itemArray.length);
   while (p2 === p1 || previousPics.includes(p2)) {
     p2 = Math.floor(Math.random() * itemArray.length);
   }
+  img2.src = itemArray[p2].filePath;
+  img2.id = itemArray[p2].itemID;
+  var photo3 = document.getElementById('photo3');
+  var img3 = photo3.children[0];
   p3 = Math.floor(Math.random() * itemArray.length);
   while (p3 === p2 || p3 === p1 || previousPics.includes(p3)) {
     p3 = Math.floor(Math.random() * itemArray.length);
   }
+  img3.src = itemArray[p3].filePath;
+  img3.id = itemArray[p3].itemID;
   previousPics = [];
   previousPics.push(p1, p2, p3);
+  itemArray[p1].timesShown += 1;
+  itemArray[p2].timesShown += 1;
+  itemArray[p3].timesShown += 1;
 };
 
-var renderPhotos = function() {
-  var photo1 = document.getElementById('photo1');
-  var img1 = document.createElement('img');
-  img1.src = itemArray[p1].filePath;
-  photo1.appendChild(img1);
-  var photo2 = document.getElementById('photo2');
-  var img2 = document.createElement('img');
-  img2.src = itemArray[p2].filePath;
-  photo2.appendChild(img2);
-  var photo3 = document.getElementById('photo3');
-  var img3 = document.createElement('img');
-  img3.src = itemArray[p3].filePath;
-  photo3.appendChild(img3);
-};
+var voteOne = document.getElementById('photo1');
+var voteTwo = document.getElementById('photo2');
+var voteThree = document.getElementById('photo3');
+voteOne.addEventListener('click', voteCounter);
+voteTwo.addEventListener('click', voteCounter);
+voteThree.addEventListener('click', voteCounter);
+var clickCounter = 0;
 
 randomPhoto();
-renderPhotos();
+function voteCounter(event) {
+  for (var i = 0; i < itemArray.length; i++) {
+    if (itemArray[i].itemID === event.target.id && clickCounter < maxClicks) {
+      itemArray[i].timesVoted++;
+      clickCounter++;
+      randomPhoto();
+    }
+    else if (clickCounter === maxClicks) {
+      voteOne.removeEventListener('click', voteCounter);
+      voteTwo.removeEventListener('click', voteCounter);
+      voteThree.removeEventListener('click', voteCounter);
+      showVotes();
+    }
+  }
+};
+
+var voteList = document.getElementById('voteList');
+
+var showVotes = function() {
+  for (var i = 0; i < itemArray.length; i++) {
+    var listItem = document.createElement('li');
+    if (itemArray[i].timesShown > 0) {
+      listItem.innerText = 'Voted for ' + itemArray[i].name + ' ' + parseInt(((itemArray[i].timesVoted / itemArray[i].timesShown) * 100)) + '% of times shown.';
+      voteList.appendChild(listItem);
+    }
+    else if (itemArray[i].timesShown === 0) {
+      listItem.innerText = 'The ' + itemArray[i].name + ' was not shown.';
+      voteList.appendChild(listItem);
+    }
+  }
+};
