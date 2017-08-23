@@ -112,15 +112,17 @@ var showVotes = function() {
 
 var chartLabels = [];
 var chartData = [];
+var votedArray = [];
+var shownArray = [];
 if (localStorage.getItem('votes')) {
-  var votedArray = JSON.parse(localStorage.getItem('votes'));
+  votedArray = JSON.parse(localStorage.getItem('votes'));
 } else {
-  var votedArray = [];
+  votedArray = [];
 }
 if (localStorage.getItem('shown')) {
-  var shownArray = JSON.parse(localStorage.getItem('shown'));
+  shownArray = JSON.parse(localStorage.getItem('shown'));
 } else {
-  var shownArray = [];
+  shownArray = [];
 }
 
 var chartVotes = function() {
@@ -157,7 +159,9 @@ var chartVotes = function() {
       }
     }
   });
+  storeData();
 };
-
-localStorage.setItem('votes', JSON.stringify(votedArray));
-localStorage.setItem('shown', JSON.stringify(shownArray));
+var storeData = function() {
+  localStorage.setItem('votes', JSON.stringify(votedArray));
+  localStorage.setItem('shown', JSON.stringify(shownArray));
+};
