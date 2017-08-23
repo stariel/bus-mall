@@ -1,11 +1,5 @@
 'use strict';
-// Code Planning
-// 1. Create HTML slots for photos to appear
 
-// 6. Set up event listener to "listen" for clicks on each image
-// 7. "Score" how many times a picture is displayed (variable in constructor function?) and how many times it is clicked.
-
-// 2. Create constructor function and push all objects to an array
 var maxClicks = 5;
 var itemArray = [];
 
@@ -39,10 +33,6 @@ var usb = new TestItem ('tentacle usb drive', 'img/usb.gif', 'usb');
 var waterCan = new TestItem ('self-watering can', 'img/water-can.jpg', 'waterCan');
 var wineGlass = new TestItem ('wine glass', 'img/wine-glass.jpg', 'wineGlass');
 
-// 3. Create function to randomize images - global variables for pictures 1, 2, and 3
-// 4. Ensure that variables are reset at beginning of function, and that function repeats until picture 2 is not the same as 1, and 3 is not the same as 1 or 2
-// 5. Make sure on further iterations that pictures do not match any of the pictures from the previous set - alternating set of variables?
-
 var p1 = 0;
 var p2 = 0;
 var p3 = 0;
@@ -56,7 +46,7 @@ var randomPhoto = function() {
     p1 = Math.floor(Math.random() * itemArray.length);
   }
   img1.src = itemArray[p1].filePath;
-  img1.id = itemArray[p1].itemID;
+  img1.setAttribute('itemIndex', p1);
   var photo2 = document.getElementById('photo2');
   var img2 = photo2.children[0];
   p2 = Math.floor(Math.random() * itemArray.length);
@@ -64,7 +54,7 @@ var randomPhoto = function() {
     p2 = Math.floor(Math.random() * itemArray.length);
   }
   img2.src = itemArray[p2].filePath;
-  img2.id = itemArray[p2].itemID;
+  img2.setAttribute('itemIndex', p2);;
   var photo3 = document.getElementById('photo3');
   var img3 = photo3.children[0];
   p3 = Math.floor(Math.random() * itemArray.length);
@@ -72,7 +62,7 @@ var randomPhoto = function() {
     p3 = Math.floor(Math.random() * itemArray.length);
   }
   img3.src = itemArray[p3].filePath;
-  img3.id = itemArray[p3].itemID;
+  img3.setAttribute('itemIndex', p3);
   previousPics = [];
   previousPics.push(p1, p2, p3);
   itemArray[p1].timesShown += 1;
@@ -93,19 +83,17 @@ var clickCounter = 0;
 
 randomPhoto();
 function voteCounter(event) {
-  for (var i = 0; i < itemArray.length; i++) {
-    if (itemArray[i].itemID === event.target.id && clickCounter < maxClicks) {
-      itemArray[i].timesVoted++;
-      clickCounter++;
-      console.log(clickCounter);
-      randomPhoto();
-    }
-    else if (clickCounter === maxClicks) {
-      voteOne.removeEventListener('click', voteCounter);
-      voteTwo.removeEventListener('click', voteCounter);
-      voteThree.removeEventListener('click', voteCounter);
-      showVotes();
-    }
+  var itemIndex = parseInt(event.target.getAttribute('itemIndex'));
+  var clickedItem = itemArray[itemIndex];
+  clickedItem.timesVoted++;
+  clickCounter++;
+  console.log(clickedItem);
+  randomPhoto();
+  if (clickCounter === maxClicks) {
+    chartVotes();
+    voteOne.removeEventListener('click', voteCounter);
+    voteTwo.removeEventListener('click', voteCounter);
+    voteThree.removeEventListener('click', voteCounter);
   }
 };
 
@@ -122,6 +110,19 @@ var showVotes = function() {
       var listItem = document.createElement('li');
       listItem.innerText = 'The ' + itemArray[i].name + ' was not shown.';
       voteList.appendChild(listItem);
+    }
+  }
+};
+
+var chartLabels = [];
+var chartData = [];
+
+var chartVotes = function() {
+  for (var i = 0; i < itemArray.length; i++) {
+    console.log(itemArray[i].name);
+    if (itemArray[i].timesShown > 0) {
+      chartLabels.push(itemArray[i].itemID);
+      chartData.push(parseInt(((itemArray[i].timesVoted / itemArray[i].timesShown) * 100)));
     }
   }
 };
