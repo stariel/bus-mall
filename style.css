@@ -1,7 +1,7 @@
 .productPhotos img {
   float: left;
-  width: 30%;
-  margin: auto;
+  width: 20%;
+  margin: 5%;
 }
 
 .clearfix {

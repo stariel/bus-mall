@@ -52,7 +52,7 @@ var randomPhoto = function() {
   var photo1 = document.getElementById('photo1');
   var img1 = photo1.children[0];
   p1 = Math.floor(Math.random() * itemArray.length);
-  while (previousPics.includes(p1)) {
+  while (previousPics.includes(p1) == true) {
     p1 = Math.floor(Math.random() * itemArray.length);
   }
   img1.src = itemArray[p1].filePath;
@@ -60,7 +60,7 @@ var randomPhoto = function() {
   var photo2 = document.getElementById('photo2');
   var img2 = photo2.children[0];
   p2 = Math.floor(Math.random() * itemArray.length);
-  while (p2 === p1 || previousPics.includes(p2)) {
+  while (p2 === p1 || previousPics.includes(p2) == true) {
     p2 = Math.floor(Math.random() * itemArray.length);
   }
   img2.src = itemArray[p2].filePath;
@@ -68,7 +68,7 @@ var randomPhoto = function() {
   var photo3 = document.getElementById('photo3');
   var img3 = photo3.children[0];
   p3 = Math.floor(Math.random() * itemArray.length);
-  while (p3 === p2 || p3 === p1 || previousPics.includes(p3)) {
+  while (p3 === p2 || p3 === p1 || previousPics.includes(p3) == true) {
     p3 = Math.floor(Math.random() * itemArray.length);
   }
   img3.src = itemArray[p3].filePath;
@@ -80,9 +80,12 @@ var randomPhoto = function() {
   itemArray[p3].timesShown += 1;
 };
 
-var voteOne = document.getElementById('photo1');
-var voteTwo = document.getElementById('photo2');
-var voteThree = document.getElementById('photo3');
+// 6. Set up event listener to "listen" for clicks on each image
+// 7. "Score" how many times a picture is displayed (variable in constructor function?) and how many times it is clicked.
+
+var voteOne = document.getElementById('img1');
+var voteTwo = document.getElementById('img2');
+var voteThree = document.getElementById('img3');
 voteOne.addEventListener('click', voteCounter);
 voteTwo.addEventListener('click', voteCounter);
 voteThree.addEventListener('click', voteCounter);
@@ -94,6 +97,7 @@ function voteCounter(event) {
     if (itemArray[i].itemID === event.target.id && clickCounter < maxClicks) {
       itemArray[i].timesVoted++;
       clickCounter++;
+      console.log(clickCounter);
       randomPhoto();
     }
     else if (clickCounter === maxClicks) {
@@ -122,30 +126,30 @@ var showVotes = function() {
   }
 };
 
-var ctx = document.getElementById("barChart").getContext('2d');
-var barChart = new Chart(ctx, {
-    type: 'bar',
-    data: {
-      labels: ,
-      datasets: [{
-        label: '# of Votes',
-        data: ,
-        backgroundColor: [
-
-        ],
-        borderColor: [
-    
-        ],
-        borderWidth: 1
-      }]
-    },
-    options: {
-        scales: {
-            yAxes: [{
-                ticks: {
-                    beginAtZero:true
-                }
-            }]
-        }
-    }
-});
+// var ctx = document.getElementById("barChart").getContext('2d');
+// var barChart = new Chart(ctx, {
+//     type: 'bar',
+//     data: {
+//     labels: ,
+//       datasets: [{
+//         label: '# of Votes',
+//         data: ,
+//         backgroundColor: [
+//
+//         ],
+//         borderColor: [
+//
+//         ],
+//         borderWidth: 1
+//       }]
+//     },
+//     options: {
+//         scales: {
+//             yAxes: [{
+//                 ticks: {
+//                     beginAtZero:true
+//                 }
+//             }]
+//         }
+//     }
+// });
