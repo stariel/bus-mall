@@ -114,16 +114,6 @@ var chartLabels = [];
 var chartData = [];
 var votedArray = [];
 var shownArray = [];
-if (localStorage.getItem('votes')) {
-  votedArray = JSON.parse(localStorage.getItem('votes'));
-} else {
-  votedArray = [];
-}
-if (localStorage.getItem('shown')) {
-  shownArray = JSON.parse(localStorage.getItem('shown'));
-} else {
-  shownArray = [];
-}
 
 var chartVotes = function() {
   for (var i = 0; i < itemArray.length; i++) {
@@ -165,3 +155,16 @@ var storeData = function() {
   localStorage.setItem('votes', JSON.stringify(votedArray));
   localStorage.setItem('shown', JSON.stringify(shownArray));
 };
+
+if (localStorage.getItem('votes')) {
+  var previousVotes = JSON.parse(localStorage.getItem('votes'));
+  for (var i = 0; i < itemArray.length; i++) {
+    itemArray[i].timesVoted = previousVotes[i];
+  }
+}
+if (localStorage.getItem('shown')) {
+  var previousShown = JSON.parse(localStorage.getItem('shown'));
+  for (var i = 0; i < itemArray.length; i++) {
+    itemArray[i].timesShown = previousShown[i];
+  }
+}
