@@ -1,6 +1,6 @@
 'use strict';
 
-var maxClicks = 10;
+var maxClicks = 2;
 var itemArray = [];
 
 function TestItem (name, filePath, itemID) {
@@ -145,4 +145,13 @@ var chartVotes = function() {
       }
     }
   });
+};
+
+var votedArray = [];
+var shownArray = [];
+function storeData () {
+  for (i = 0; i < itemArray.length; i++){
+    push.votedArray(itemArray[i].timesVoted);
+    push.shownArray(itemArray[i].timesShown);
+  }
 };
