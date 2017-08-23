@@ -112,9 +112,21 @@ var showVotes = function() {
 
 var chartLabels = [];
 var chartData = [];
+if (localStorage.getItem('votes')) {
+  var votedArray = JSON.parse(localStorage.getItem('votes'));
+} else {
+  var votedArray = [];
+}
+if (localStorage.getItem('shown')) {
+  var shownArray = JSON.parse(localStorage.getItem('shown'));
+} else {
+  var shownArray = [];
+}
 
 var chartVotes = function() {
   for (var i = 0; i < itemArray.length; i++) {
+    votedArray.push(itemArray[i].timesVoted);
+    shownArray.push(itemArray[i].timesShown);
     if (itemArray[i].timesShown > 0) {
       chartLabels.push(itemArray[i].itemID);
       chartData.push(parseInt(((itemArray[i].timesVoted / itemArray[i].timesShown) * 100)));
@@ -147,11 +159,5 @@ var chartVotes = function() {
   });
 };
 
-var votedArray = [];
-var shownArray = [];
-function storeData () {
-  for (i = 0; i < itemArray.length; i++){
-    push.votedArray(itemArray[i].timesVoted);
-    push.shownArray(itemArray[i].timesShown);
-  }
-};
+localStorage.setItem('votes', JSON.stringify(votedArray));
+localStorage.setItem('shown', JSON.stringify(shownArray));
