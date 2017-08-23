@@ -109,12 +109,13 @@ var voteList = document.getElementById('voteList');
 
 var showVotes = function() {
   for (var i = 0; i < itemArray.length; i++) {
-    var listItem = document.createElement('li');
     if (itemArray[i].timesShown > 0) {
+      var listItem = document.createElement('li');
       listItem.innerText = 'Voted for ' + itemArray[i].name + ' ' + parseInt(((itemArray[i].timesVoted / itemArray[i].timesShown) * 100)) + '% of times shown.';
       voteList.appendChild(listItem);
     }
     else if (itemArray[i].timesShown === 0) {
+      var listItem = document.createElement('li');
       listItem.innerText = 'The ' + itemArray[i].name + ' was not shown.';
       voteList.appendChild(listItem);
     }
