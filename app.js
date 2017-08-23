@@ -1,6 +1,6 @@
 'use strict';
 
-var maxClicks = 5;
+var maxClicks = 10;
 var itemArray = [];
 
 function TestItem (name, filePath, itemID) {
@@ -70,9 +70,6 @@ var randomPhoto = function() {
   itemArray[p3].timesShown += 1;
 };
 
-// 6. Set up event listener to "listen" for clicks on each image
-// 7. "Score" how many times a picture is displayed (variable in constructor function?) and how many times it is clicked.
-
 var voteOne = document.getElementById('img1');
 var voteTwo = document.getElementById('img2');
 var voteThree = document.getElementById('img3');
@@ -87,7 +84,6 @@ function voteCounter(event) {
   var clickedItem = itemArray[itemIndex];
   clickedItem.timesVoted++;
   clickCounter++;
-  console.log(clickedItem);
   randomPhoto();
   if (clickCounter === maxClicks) {
     chartVotes();
@@ -119,38 +115,34 @@ var chartData = [];
 
 var chartVotes = function() {
   for (var i = 0; i < itemArray.length; i++) {
-    console.log(itemArray[i].name);
     if (itemArray[i].timesShown > 0) {
       chartLabels.push(itemArray[i].itemID);
       chartData.push(parseInt(((itemArray[i].timesVoted / itemArray[i].timesShown) * 100)));
     }
   }
+  var ctx = document.getElementById('barChart').getContext('2d');
+  var barChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: chartLabels,
+      datasets: [{
+        label: '# of Votes',
+        data: chartData,
+        backgroundColor: [
+        ],
+        borderColor: [
+        ],
+        borderWidth: 1
+      }]
+    },
+    options: {
+      scales: {
+        yAxes: [{
+          ticks: {
+            beginAtZero:true
+          }
+        }]
+      }
+    }
+  });
 };
-
-// var ctx = document.getElementById("barChart").getContext('2d');
-// var barChart = new Chart(ctx, {
-//     type: 'bar',
-//     data: {
-//     labels: ,
-//       datasets: [{
-//         label: '# of Votes',
-//         data: ,
-//         backgroundColor: [
-//
-//         ],
-//         borderColor: [
-//
-//         ],
-//         borderWidth: 1
-//       }]
-//     },
-//     options: {
-//         scales: {
-//             yAxes: [{
-//                 ticks: {
-//                     beginAtZero:true
-//                 }
-//             }]
-//         }
-//     }
-// });
