@@ -121,3 +121,31 @@ var showVotes = function() {
     }
   }
 };
+
+var ctx = document.getElementById("barChart").getContext('2d');
+var barChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: ,
+      datasets: [{
+        label: '# of Votes',
+        data: ,
+        backgroundColor: [
+
+        ],
+        borderColor: [
+    
+        ],
+        borderWidth: 1
+      }]
+    },
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero:true
+                }
+            }]
+        }
+    }
+});
