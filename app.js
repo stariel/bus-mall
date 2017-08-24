@@ -128,13 +128,13 @@ var chartVotes = function() {
   }
   var ctx = document.getElementById('barChart').getContext('2d');
   var barChart = new Chart(ctx, {
-    type: 'bar',
+    type: 'horizontalBar',
     data: {
       labels: chartLabels,
       datasets: [{
         label: 'Voted / Times Shown %',
         data: chartData,
-        backgroundColor: 'blue',
+        backgroundColor: 'lightBlue',
         borderColor: 'black',
         borderWidth: 1
       }]

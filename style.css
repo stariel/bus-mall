@@ -25,3 +25,8 @@ p {
     float: left;
     margin-right: 30px;
 }
+
+#barChart {
+  width: 80%;
+  margin: auto;
+}
