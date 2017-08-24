@@ -1,6 +1,6 @@
 'use strict';
 
-var maxClicks = 10;
+var maxClicks = 2;
 var itemArray = [];
 
 function TestItem (name, filePath, itemID) {
@@ -112,9 +112,13 @@ var showVotes = function() {
 
 var chartLabels = [];
 var chartData = [];
+var votedArray = [];
+var shownArray = [];
 
 var chartVotes = function() {
   for (var i = 0; i < itemArray.length; i++) {
+    votedArray.push(itemArray[i].timesVoted);
+    shownArray.push(itemArray[i].timesShown);
     if (itemArray[i].timesShown > 0) {
       chartLabels.push(itemArray[i].itemID);
       chartData.push(parseInt(((itemArray[i].timesVoted / itemArray[i].timesShown) * 100)));
@@ -145,4 +149,22 @@ var chartVotes = function() {
       }
     }
   });
+  storeData();
 };
+var storeData = function() {
+  localStorage.setItem('votes', JSON.stringify(votedArray));
+  localStorage.setItem('shown', JSON.stringify(shownArray));
+};
+
+if (localStorage.getItem('votes')) {
+  var previousVotes = JSON.parse(localStorage.getItem('votes'));
+  for (var i = 0; i < itemArray.length; i++) {
+    itemArray[i].timesVoted = previousVotes[i];
+  }
+}
+if (localStorage.getItem('shown')) {
+  var previousShown = JSON.parse(localStorage.getItem('shown'));
+  for (var i = 0; i < itemArray.length; i++) {
+    itemArray[i].timesShown = previousShown[i];
+  }
+}
