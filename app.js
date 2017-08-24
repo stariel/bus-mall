@@ -42,7 +42,7 @@ var randomPhoto = function() {
   var photo1 = document.getElementById('photo1');
   var img1 = photo1.children[0];
   p1 = Math.floor(Math.random() * itemArray.length);
-  while (previousPics.includes(p1) == true) {
+  while (previousPics.includes(p1)) {
     p1 = Math.floor(Math.random() * itemArray.length);
   }
   img1.src = itemArray[p1].filePath;
@@ -50,7 +50,7 @@ var randomPhoto = function() {
   var photo2 = document.getElementById('photo2');
   var img2 = photo2.children[0];
   p2 = Math.floor(Math.random() * itemArray.length);
-  while (p2 === p1 || previousPics.includes(p2) == true) {
+  while (p2 === p1 || previousPics.includes(p2)) {
     p2 = Math.floor(Math.random() * itemArray.length);
   }
   img2.src = itemArray[p2].filePath;
@@ -58,7 +58,7 @@ var randomPhoto = function() {
   var photo3 = document.getElementById('photo3');
   var img3 = photo3.children[0];
   p3 = Math.floor(Math.random() * itemArray.length);
-  while (p3 === p2 || p3 === p1 || previousPics.includes(p3) == true) {
+  while (p3 === p2 || p3 === p1 || previousPics.includes(p3)) {
     p3 = Math.floor(Math.random() * itemArray.length);
   }
   img3.src = itemArray[p3].filePath;
@@ -84,7 +84,9 @@ function voteCounter(event) {
   var clickedItem = itemArray[itemIndex];
   clickedItem.timesVoted++;
   clickCounter++;
-  randomPhoto();
+  if (clickCounter < maxClicks) {
+    randomPhoto();
+  }
   if (clickCounter === maxClicks) {
     chartVotes();
     voteOne.removeEventListener('click', voteCounter);
