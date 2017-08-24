@@ -1,6 +1,6 @@
 'use strict';
 
-var maxClicks = 2;
+var maxClicks = 25;
 var itemArray = [];
 
 function TestItem (name, filePath, itemID) {
@@ -12,25 +12,25 @@ function TestItem (name, filePath, itemID) {
   itemArray.push(this);
 }
 
-var bag = new TestItem ('rolling R2D2 suitcase', 'img/bag.jpg', 'bag');
+var bag = new TestItem ('R2D2 suitcase', 'img/bag.jpg', 'bag');
 var banana = new TestItem ('banana slicer', 'img/banana.jpg', 'banana');
-var bathroom = new TestItem ('tablet & toilet paper holder', 'img/bathroom.jpg', 'bathroom');
-var boots = new TestItem ('yellow rain boots', 'img/boots.jpg', 'boots');
-var breakfast = new TestItem ('multi-breakfast cooker', 'img/breakfast.jpg', 'breakfast');
+var bathroom = new TestItem ('tablet & tp holder', 'img/bathroom.jpg', 'bathroom');
+var boots = new TestItem ('open-toe boots', 'img/boots.jpg', 'boots');
+var breakfast = new TestItem ('breakfast cooker', 'img/breakfast.jpg', 'breakfast');
 var bubblegum = new TestItem ('meatball bubblegum', 'img/bubblegum.jpg', 'bubblegum');
 var chair = new TestItem ('red chair', 'img/chair.jpg', 'chair');
-var cthulhu = new TestItem ('cthulhu action figure', 'img/cthulhu.jpg', 'cthulhu');
+var cthulhu = new TestItem ('cthulhu figurine', 'img/cthulhu.jpg', 'cthulhu');
 var dogDuck = new TestItem ('dog ducklips', 'img/dog-duck.jpg', 'dogDuck');
 var dragon = new TestItem ('dragon meat', 'img/dragon.jpg', 'dragon');
 var pen = new TestItem ('pen utensils', 'img/pen.jpg', 'pen');
 var petSweep = new TestItem ('pet sweeper shoes', 'img/pet-sweep.jpg', 'petSweep');
 var scissors = new TestItem ('pizza scissors', 'img/scissors.jpg', 'scissors');
-var shark = new TestItem ('shark sleeping bag', 'img/shark.jpg', 'shark');
-var sweep = new TestItem ('baby sweeper suit', 'img/sweep.png', 'sweep');
-var tauntaun = new TestItem ('tauntaun sleeping bag', 'img/tauntaun.jpg', 'tauntaun');
+var shark = new TestItem ('shark bag', 'img/shark.jpg', 'shark');
+var sweep = new TestItem ('sweeper onesie', 'img/sweep.png', 'sweep');
+var tauntaun = new TestItem ('tauntaun bag', 'img/tauntaun.jpg', 'tauntaun');
 var unicorn = new TestItem ('unicorn meat', 'img/unicorn.jpg', 'unicorn');
-var usb = new TestItem ('tentacle usb drive', 'img/usb.gif', 'usb');
-var waterCan = new TestItem ('self-watering can', 'img/water-can.jpg', 'waterCan');
+var usb = new TestItem ('tentacle usb', 'img/usb.gif', 'usb');
+var waterCan = new TestItem ('watering can', 'img/water-can.jpg', 'waterCan');
 var wineGlass = new TestItem ('wine glass', 'img/wine-glass.jpg', 'wineGlass');
 
 var p1 = 0;
@@ -101,7 +101,7 @@ var showVotes = function() {
   for (var i = 0; i < itemArray.length; i++) {
     if (itemArray[i].timesShown > 0) {
       var listItem = document.createElement('li');
-      listItem.innerText = 'Voted for ' + itemArray[i].name + ' ' + parseInt(((itemArray[i].timesVoted / itemArray[i].timesShown) * 100)) + '% of times shown.';
+      listItem.innerText = itemArray.timesVoted + 'votes for ' + itemArray[i].name + ', ' + parseInt(((itemArray[i].timesVoted / itemArray[i].timesShown) * 100)) + '% of times shown.';
       voteList.appendChild(listItem);
     }
     else if (itemArray[i].timesShown === 0) {
@@ -122,7 +122,7 @@ var chartVotes = function() {
     votedArray.push(itemArray[i].timesVoted);
     shownArray.push(itemArray[i].timesShown);
     if (itemArray[i].timesShown > 0) {
-      chartLabels.push(itemArray[i].itemID);
+      chartLabels.push(itemArray[i].name);
       chartData.push(parseInt(((itemArray[i].timesVoted / itemArray[i].timesShown) * 100)));
     }
   }
@@ -132,12 +132,10 @@ var chartVotes = function() {
     data: {
       labels: chartLabels,
       datasets: [{
-        label: '# of Votes',
+        label: 'Voted / Times Shown %',
         data: chartData,
-        backgroundColor: [
-        ],
-        borderColor: [
-        ],
+        backgroundColor: 'blue',
+        borderColor: 'black',
         borderWidth: 1
       }]
     },
