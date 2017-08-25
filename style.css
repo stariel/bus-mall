@@ -7,3 +7,26 @@
 .clearfix {
   clear: both;
 }
+
+h1 {
+  font-family: 'Baloo Bhaijaan', cursive;
+  font-size: 60px;
+}
+p {
+  font-family: Arial, sans-serif;
+  font-size: 20px;
+  width: 80%;
+  margin: auto;
+  margin-top: 30px;
+}
+
+#mainBus {
+    width: 30%;
+    float: left;
+    margin-right: 30px;
+}
+
+#barChart {
+  width: 80%;
+  margin: auto;
+}
